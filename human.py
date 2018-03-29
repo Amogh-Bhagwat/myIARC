@@ -2,8 +2,6 @@ import rospy
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 import cv2
-from imutils.video import VideoStream
-from imutils.video import FPS
 import numpy as np
 import argparse
 import imutils
@@ -36,7 +34,7 @@ def image_callback(msg):
     except CvBridgeError, e:
         print(e)
     else:
-        frame=frame.read()
+       
         frame = imutils.resize(frame, width=400)
 
         (h, w) = frame.shape[:2]
@@ -59,9 +57,8 @@ def image_callback(msg):
                     y = startY - 15 if startY - 15 > 15 else startY + 15
                     cv2.putText(frame, label, (startX, y),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, COLORS[idx], 2)
-        cv2.imshow("Frame", frame)
-        #cv2.imwrite('camera_image.jpeg', cv2_img)
-
+        #cv2.imshow("Frame", frame)
+    
 def main():
     rospy.init_node('image_listener')
     # Define your image topic
@@ -70,6 +67,8 @@ def main():
     rospy.Subscriber(image_topic, Image, image_callback)
     # Spin until ctrl + c
     rospy.spin()
+
+
 
 if __name__ == '__main__':
     main()
