@@ -6,6 +6,7 @@ import numpy as np
 import argparse
 import imutils
 import time
+import geometry_msgs.msg
 
 
 
@@ -25,6 +26,8 @@ net = cv2.dnn.readNetFromCaffe(args["prototxt"], args["model"])
 
 # Instantiate CvBridge
 bridge = CvBridge()
+
+centroid_human = rospy.Publisher('/humanTracking/centroid', geometry_msgs.msg.Point,queue_size=1)
 
 def image_callback(msg):
     print("Received an image!")
@@ -50,14 +53,21 @@ def image_callback(msg):
                 if idx==15:
                     box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
                     (startX, startY, endX, endY) = box.astype("int")
-                    print("("+str(startX)+","+str(startY)+")  ("+str(endX)+" "+str(endY)+")"+"   centeroid : ("+str((startX+endX)/2)+"),("+str((startY+endY)/2)+")" )
+                    x_centroid = (startX+endX)/2
+                    y_centroid = (startY+endY)/2
+                    print("("+str(startX)+","+str(startY)+")  ("+str(endX)+" "+str(endY)+")"+"   centroid : ("+str((startX+endX)/2)+"),("+str((startY+endY)/2)+")" )
                     label = "{}: {:.2f}%".format(CLASSES[idx],confidence * 100)
                     cv2.rectangle(frame, (startX, startY), (endX, endY),
                         COLORS[idx], 2)
                     y = startY - 15 if startY - 15 > 15 else startY + 15
                     cv2.putText(frame, label, (startX, y),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, COLORS[idx], 2)
-        #cv2.imshow("Frame", frame)
+
+                    cen = geometry_msgs.msg.Point()
+                    cen.x = x_centroid
+                    cen.y = y_centroid
+                    cen.z = 0
+                    centroid_human.publish(cen)
     
 def main():
     rospy.init_node('image_listener')

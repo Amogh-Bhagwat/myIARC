@@ -1,1 +1,11 @@
-python humandnn.py --prototxt MobileNetSSD_deploy.prototxt.txt --model MobileNetSSD_deploy.caffemodel
+To start usb camera:
+roslaunch usb_cam usb_cam-test.launch
+
+rqt_image_view
+
+python human.py --prototxt MobileNetSSD_deploy.prototxt.txt --model MobileNetSSD_deploy.caffemodel
+
+
+
+
+
