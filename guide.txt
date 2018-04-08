@@ -5,6 +5,9 @@ rqt_image_view
 
 python human.py --prototxt MobileNetSSD_deploy.prototxt.txt --model MobileNetSSD_deploy.caffemodel
 
+rviz rivz -d rviz/realsensrgbd_pointcloud.rviz 
+# to open depth camera
+
 
 
 
