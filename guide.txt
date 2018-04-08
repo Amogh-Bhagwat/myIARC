@@ -13,6 +13,9 @@ rviz rivz -d rviz/realsensrgbd_pointcloud.rviz
 rostopic echo /camera/depth/points
 #to see the data from a topic
 
+rostopic info "/camera/depth/points"
+#to see the type of data given by a topic
+
 
 
 
