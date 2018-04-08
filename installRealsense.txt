@@ -1,0 +1,11 @@
+cd
+sudo apt -y install ros-kinetic-desktop-full python-rosinstall ros-kinetic-realsense-camera
+sudo rosdep init
+rosdep update
+ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+sudo reboot
+
+To run the camera:
+roscd realsense_camera
+roslaunch realsense_camera r200_nodelet_rgbd.launch
