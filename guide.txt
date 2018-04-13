@@ -8,7 +8,8 @@ python human.py --prototxt MobileNetSSD_deploy.prototxt.txt --model MobileNetSSD
 
 roscd realsense_camera
 roslaunch realsense_camera r200_nodelet_rgbd.launch 
-rviz rivz -d rviz/realsensrgbd_pointcloud.rviz 
+rviz rivz -d rviz/realsense_rgbd_pointcloud.rviz 
+ 
 # to open depth camera
 
 rostopic echo /camera/depth/points
