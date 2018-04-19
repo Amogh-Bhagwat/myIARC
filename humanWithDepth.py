@@ -1,4 +1,5 @@
 import rospy
+import pcl
 import sys
 import cv2
 import numpy as np
@@ -49,7 +50,7 @@ def image_callback(msg):
                     (startX, startY, endX, endY) = box.astype("int")
                     x_centroid = (startX+endX)/2
                     y_centroid = (startY+endY)/2
-                    #print("("+str(startX)+","+str(startY)+")  ("+str(endX)+" "+str(endY)+")"+"   centroid : ("+str(x_centroid)+"),("+str(x_centroid)+")" )
+                    print("("+str(startX)+","+str(startY)+")  ("+str(endX)+" "+str(endY)+")"+"   centroid : ("+str(x_centroid)+"),("+str(x_centroid)+")" )
                     cen = geometry_msgs.msg.Point()
                     cen.x = x_centroid
                     cen.y = y_centroid  
@@ -58,23 +59,34 @@ def image_callback(msg):
 
 def image_callback2(msg2):
     print("Received an image for depth!")
-    pc = pypcd.PointCloud.from_msg(msg2)
+   
+
+    points_list = []
+
+    for data in pc2.read_points(msg2, skip_nans=True):
+        points_list.append([data[0], data[1], data[2], data[3]])
+        print(str(data[0])+" "+str(data[0])+" "+str(data[0])+" "+str(data[0]))
+    pc = pcl.PointCloud_PointXYZRGB()
+    pc.from_list(points_list)
+
     count = 0
     depthSum = 0
-    print("("+str(startX)+","+str(startY)+")  ("+str(endX)+" "+str(endY)+")"+"   centroid : ("+str(x_centroid)+"),("+str(x_centroid)+")" )   
+    #print("("+str(startX)+","+str(startY)+")  ("+str(endX)+" "+str(endY)+")"+"   centroid : ("+str(x_centroid)+"),("+str(x_centroid)+")" )   
     for x in range(startX, endX):        
         for y in range(startY, endY):
-            print(str(x)+" "+str(y))
-            print(pc.pc_data['x'])
-    #         depthSum = depthSum + pc[(pc['x'] == x) & (pc['y'] == y)]['z']            
-    #         count= count+1
-    # depth = depthSum/count
+            #print(str(x)+" "+str(y))
+            for data in pc:
+                if (data[0]==x && data[1]==y && data[z]!=0):
+                    depthSum = depthSum + data[z]          
+                    count= count+1            
+            
+    depth = depthSum/count
 
-    # dep = geometry_msgs.msg.Point()
-    # dep.x = 0
-    # dep.y = 0  
-    # dep.z = depth
-    # depth_human.publish(dep)    
+    dep = geometry_msgs.msg.Point()
+    dep.x = 0
+    dep.y = 0  
+    dep.z = depth
+    depth_human.publish(dep)    
 
 def main():
     rospy.init_node('image_listener')  
