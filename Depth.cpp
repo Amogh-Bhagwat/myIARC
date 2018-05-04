@@ -5,10 +5,11 @@
 #include <pcl/point_types.h>
 #include "std_msgs/Float64MultiArray.h"
 #include "geometry_msgs/Point.h"
-#include <message_filters/subscriber.h>
-#include <message_filters/synchronizer.h>
-#include <message_filters/sync_policies/exact_time.h>
-#include <message_filters/time_synchronizer.h>
+// #include <message_filters/subscriber.h>
+// #include <message_filters/synchronizer.h>
+
+// #include <message_filters/time_synchronizer.h>
+// #include <message_filters/sync_policies/exact_time.h>
 
 using namespace sensor_msgs;
 using namespace message_filters;
@@ -55,8 +56,8 @@ int main (int argc, char** argv)
   	message_filters::Subscriber<PointCloud2> depth_sub(nh, "/camera/depth/points", 1);
   	message_filters::Subscriber<Float64MultiArray> point_sub(nh, "/humanTracking/point", 1);
 
-  	TimeSynchronizer<PointCloud2, Float64MultiArray> sync(depth_sub, point_sub, 10);
-  	sync.registerCallback(boost::bind(&callback, _1, _2));
+  	// TimeSynchronizer<PointCloud2, Float64MultiArray> sync(depth_sub, point_sub, 10);
+  	// sync.registerCallback(boost::bind(&callback, _1, _2));
 
   	//typedef sync_policies::ExactTime<PointCloud2, Float64MultiArray> MySyncPolicy;
 
