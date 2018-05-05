@@ -128,8 +128,15 @@ include_directories(
 # include
   include/humandnn
   ${catkin_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
 )
+
+
+
+link_directories(${PCL_LIBRARY_DIRS})
+
+add_definitions(${PCL_DEFINITIONS})
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
@@ -161,7 +168,7 @@ add_executable(humandnn src/Depth.cpp)
 #target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
-target_link_libraries(humandnn ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+target_link_libraries(humandnn ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_LIBRARIES}${PCL_COMMON_LIBRARIES} ${PCL_IO_LIBRARIES})
 #############
 ## Install ##
 #############
