@@ -18,6 +18,10 @@ rostopic echo /camera/depth/points
 rostopic info "/camera/depth/points"
 #to see the type of data given by a topic
 
+//
+g++ box.cpp -o test `pkg-config --cflags --libs opencv`
+
+
 
 
 
