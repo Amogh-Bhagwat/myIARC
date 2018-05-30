@@ -62,9 +62,9 @@ int main(int argc, char const *argv[])
 			}
 
 		}
-
-	}
 	in.close();
 	out.close();
+	}
+	
 	return 0;
 }
