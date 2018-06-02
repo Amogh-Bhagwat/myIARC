@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 2.8.3)
 project(humandnn)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -19,7 +20,7 @@ find_package(catkin REQUIRED COMPONENTS
   nav_msgs
   geometry_msgs
   pcl_conversions
-  message_filters
+  pcl_ros
 )
 
 ## System dependencies are found with CMake's conventions
@@ -124,8 +125,8 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
+
 include_directories(
-# include
   include/humandnn
   ${catkin_INCLUDE_DIRS}
   ${PCL_INCLUDE_DIRS}
@@ -152,6 +153,8 @@ add_definitions(${PCL_DEFINITIONS})
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/humandnn_node.cpp)
+
+
 add_executable(humandnn src/Depth.cpp)
 
 ## Rename C++ executable without prefix
@@ -168,7 +171,11 @@ add_executable(humandnn src/Depth.cpp)
 #target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
+
+
 target_link_libraries(humandnn ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_LIBRARIES}${PCL_COMMON_LIBRARIES} ${PCL_IO_LIBRARIES})
+
+
 #############
 ## Install ##
 #############
